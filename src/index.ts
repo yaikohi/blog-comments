@@ -24,7 +24,6 @@ app
 
 // --- ROUTES
 app
-  .get("/", () => "Hello Elysia")
   .group("/events", (app) =>
     app
       .post("/", async ({ body }) => {
