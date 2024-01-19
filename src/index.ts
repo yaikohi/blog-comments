@@ -1,17 +1,8 @@
 import cors from "@elysiajs/cors";
 import { Elysia, t } from "elysia";
-import { CommentType, EventType } from "./types";
+import { CommentType } from "./types";
 import { EventBodySchema } from "./schemas";
-// --- SERVICES -- PORTS
-const PORT_EVENTBUS = `4005`;
-// --- SERVICES -- HOSTS
-const HOST_EVENTBUS = `event-bus-srv`;
-// --- URLS
-export const URL_EVENTBUS = `http://${HOST_EVENTBUS}:${PORT_EVENTBUS}/events`;
-
-// --- DB
-// const DB: PostDBType = {};
-// const posts: PostType[] = [];
+import { sendCommentCreatedEvent } from "./utils";
 
 // --- APP.CONFIG
 const PORT = 4001;
@@ -75,40 +66,3 @@ app
 console.log(
   `🦊 Elysia is running the 'comments' service at ${app.server?.hostname}:${app.server?.port}`,
 );
-
-export async function sendCommentCreatedEvent(
-  { postId, comment }: { postId: string; comment: CommentType },
-) {
-  const event: EventType = {
-    type: "comment.created",
-    data: { comment, postId },
-  };
-  try {
-    await fetch(URL_EVENTBUS, {
-      method: "POST",
-      body: JSON.stringify(event),
-      headers: { "Content-Type": "application/json" },
-    });
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-export async function sendCommentUpdatedEvent(
-  { postId, comment }: { postId: string; comment: CommentType },
-) {
-  const URL_EB = `http://localhost:4005/events`;
-  const event: EventType = {
-    type: "comment.updated",
-    data: { comment, postId },
-  };
-  try {
-    await fetch(URL_EB, {
-      method: "POST",
-      body: JSON.stringify(event),
-      headers: { "Content-Type": "application/json" },
-    });
-  } catch (err) {
-    console.error(err);
-  }
-}
