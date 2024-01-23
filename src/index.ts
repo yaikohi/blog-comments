@@ -29,7 +29,7 @@ app
   .group("/posts", (app) =>
     app
       .post("/:id/comments", async ({ body, params, set }) => {
-        console.log({ commentServiceBodyReceived: body });
+        console.log(`Received comment.`);
         const postId = params.id;
         const commentId = crypto.randomUUID();
 

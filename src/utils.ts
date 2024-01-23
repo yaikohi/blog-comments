@@ -24,11 +24,14 @@ export async function sendCommentCreatedEvent(
   };
   const url = getURL();
   try {
+    console.log(`Sending ${event.type} to event-bus.`);
     await fetch(url, {
       method: "POST",
       body: JSON.stringify(event),
       headers: { "Content-Type": "application/json" },
     });
+
+    console.log(`Finished sending ${event.type} to event-bus.`);
   } catch (err) {
     console.error(err);
   }
@@ -43,11 +46,14 @@ export async function sendCommentUpdatedEvent(
     data: { comment, postId },
   };
   try {
+    console.log(`Sending ${event.type} to event-bus.`);
     await fetch(url, {
       method: "POST",
       body: JSON.stringify(event),
       headers: { "Content-Type": "application/json" },
     });
+
+    console.log(`Finished sending ${event.type} to event-bus.`);
   } catch (err) {
     console.error(err);
   }
